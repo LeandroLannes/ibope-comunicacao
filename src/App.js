@@ -227,7 +227,7 @@ export default function App() {
       messages_content.push({ type: "text", text: `\n---\nVertical: ${vertical}\nPúblico-alvo do release: ${p.label} (${p.desc}).\nGere o material completo conforme o formato JSON.` });
 
       const res = await fetch("https://api.anthropic.com/v1/messages", {
-        method: "POST", headers: { "Content-Type": "application/json" },
+        method: "POST", headers: { "Content-Type": "application/json", "x-api-key": process.env.REACT_APP_ANTHROPIC_KEY, "anthropic-version": "2023-06-01", "anthropic-dangerous-direct-browser-access": "true" },
         body: JSON.stringify({
           model: "claude-sonnet-4-20250514", max_tokens: 8000,
           system: buildSystemMain(vertical, p.label),
@@ -252,7 +252,7 @@ export default function App() {
     setChat(prev => ({ ...prev, [vid]: hist })); setChatLoading(true);
     try {
       const res = await fetch("https://api.anthropic.com/v1/messages", {
-        method: "POST", headers: { "Content-Type": "application/json" },
+        method: "POST", headers: { "Content-Type": "application/json", "x-api-key": process.env.REACT_APP_ANTHROPIC_KEY, "anthropic-version": "2023-06-01", "anthropic-dangerous-direct-browser-access": "true" },
         body: JSON.stringify({
           model: "claude-sonnet-4-20250514", max_tokens: 1000,
           system: buildSystemChatbot(docsCtx),
